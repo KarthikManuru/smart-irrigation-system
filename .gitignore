@@ -1,0 +1,8 @@
+
+# Local environment variables
+fields-api/.env
+fields-api/.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
