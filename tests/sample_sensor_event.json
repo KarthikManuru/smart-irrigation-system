@@ -1,0 +1,14 @@
+{
+  "event_id": "evt-000001",
+  "device_id": "DEV-001",
+  "field_id": "FIELD-001",
+  "sensor_id": "SENSOR-001",
+  "timestamp": "2026-10-09T12:30:00Z",
+  "readings": {
+    "soil_moisture_pct": 28.5,
+    "soil_temperature_c": 29.2,
+    "air_temperature_c": 32.1,
+    "humidity_pct": 61.0
+  },
+  "battery_pct": 87.0
+}
