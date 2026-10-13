@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -17,6 +16,10 @@ app.use("/api/weather", weatherRoutes);
 
 const PORT = process.env.PORT || 4001;
 
-app.listen(PORT, () => {
-  console.log(`Weather API running at http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Weather API running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

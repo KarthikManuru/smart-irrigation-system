@@ -1,8 +1,16 @@
 
 # Local environment variables
 fields-api/.env
+.env
+
+# Python virtual environments
 fields-api/.venv/
+.venv/
 
 # Python cache files
 __pycache__/
 *.py[cod]
+.pytest_cache/
+
+# VS Code settings
+.vscode/

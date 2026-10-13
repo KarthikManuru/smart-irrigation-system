@@ -7,13 +7,15 @@ const {
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const lat = Number(req.query.lat);
-  const lon = Number(req.query.lon);
+function parseCoordinates(query) {
+  const parseValue = (value) =>
+    typeof value === "string" && value.trim() !== ""
+      ? Number(value)
+      : Number.NaN;
+  const lat = parseValue(query.lat);
+  const lon = parseValue(query.lon);
 
   if (
-    req.query.lat === undefined ||
-    req.query.lon === undefined ||
     !Number.isFinite(lat) ||
     !Number.isFinite(lon) ||
     lat < -90 ||
@@ -21,54 +23,38 @@ router.get("/", async (req, res) => {
     lon < -180 ||
     lon > 180
   ) {
+    return null;
+  }
+
+  return { lat, lon };
+}
+
+async function handleWeatherRequest(req, res, getWeather) {
+  const coordinates = parseCoordinates(req.query);
+  if (!coordinates) {
     return res.status(400).json({
       error: "Valid latitude and longitude are required.",
+      code: "invalid_coordinates",
     });
   }
 
   try {
-    const weather = await getOpenWeatherMapWeather(lat, lon);
+    const weather = await getWeather(coordinates.lat, coordinates.lon);
     return res.json(weather);
   } catch (error) {
-    console.error("Weather API error:", error.message);
-
-    return res.status(502).json({
-      error: "Unable to retrieve weather data.",
-      details: error.message,
+    return res.status(error.statusCode || 502).json({
+      error: error.publicMessage || "Unable to retrieve weather data.",
+      code: error.code || "provider_error",
     });
   }
-});
+}
 
-router.get("/tomorrow", async (req, res) => {
-  const lat = Number(req.query.lat);
-  const lon = Number(req.query.lon);
+router.get("/", (req, res) =>
+  handleWeatherRequest(req, res, getOpenWeatherMapWeather),
+);
 
-  if (
-    req.query.lat === undefined ||
-    req.query.lon === undefined ||
-    !Number.isFinite(lat) ||
-    !Number.isFinite(lon) ||
-    lat < -90 ||
-    lat > 90 ||
-    lon < -180 ||
-    lon > 180
-  ) {
-    return res.status(400).json({
-      error: "Valid latitude and longitude are required.",
-    });
-  }
-
-  try {
-    const weather = await getTomorrowWeather(lat, lon);
-    return res.json(weather);
-  } catch (error) {
-    console.error("Tomorrow.io error:", error.message);
-
-    return res.status(502).json({
-      error: "Unable to retrieve Tomorrow.io weather data.",
-      details: error.message,
-    });
-  }
-});
+router.get("/tomorrow", (req, res) =>
+  handleWeatherRequest(req, res, getTomorrowWeather),
+);
 
 module.exports = router;
