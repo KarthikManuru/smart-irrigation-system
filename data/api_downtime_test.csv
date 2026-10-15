@@ -1,0 +1,3 @@
+temperature_C,humidity_%,rainfall_mm,source
+27.0,65.0,2.0,simulated_api
+17.79,77.03,75.62,cache_fallback
