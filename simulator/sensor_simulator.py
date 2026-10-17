@@ -31,7 +31,7 @@ DEVICES = [
     SimulatedDevice(
         device_id="DEV-001",
         field_id="FIELD-001",
-        sensor_id="SENSOR-001",
+        sensor_id="SENSOR_001",
         soil_moisture_pct=35.0,
     ),
     SimulatedDevice(

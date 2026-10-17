@@ -54,15 +54,23 @@ CREATE TABLE sensors (
 );
 
 CREATE TABLE sensor_readings (
-    time TIMESTAMPTZ NOT NULL,
-    sensor_id VARCHAR(50) NOT NULL REFERENCES sensors(sensor_id),
-    moisture NUMERIC(5,2),
-    temperature NUMERIC(5,2),
-    is_imputed BOOLEAN DEFAULT FALSE,
-    is_outlier BOOLEAN DEFAULT FALSE
+    event_id VARCHAR(100) PRIMARY KEY,
+    device_id VARCHAR(100) NOT NULL,
+    field_id VARCHAR(100) NOT NULL,
+    sensor_id VARCHAR(100) NOT NULL,
+    timestamp TIMESTAMPTZ NOT NULL,
+    soil_moisture_pct DOUBLE PRECISION NOT NULL
+        CHECK (soil_moisture_pct BETWEEN 0 AND 100),
+    soil_temperature_c DOUBLE PRECISION NOT NULL,
+    air_temperature_c DOUBLE PRECISION NOT NULL,
+    humidity_pct DOUBLE PRECISION NOT NULL
+        CHECK (humidity_pct BETWEEN 0 AND 100),
+    battery_pct DOUBLE PRECISION NOT NULL
+        CHECK (battery_pct BETWEEN 0 AND 100),
+    received_at TIMESTAMPTZ NOT NULL
 );
-SELECT create_hypertable('sensor_readings', 'time');
-CREATE INDEX ON sensor_readings (sensor_id, time DESC);
+CREATE INDEX ON sensor_readings (sensor_id, timestamp DESC);
+CREATE INDEX ON sensor_readings (device_id, timestamp DESC);
 
 CREATE TABLE weather_data (
     time TIMESTAMPTZ NOT NULL,

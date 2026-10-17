@@ -38,7 +38,7 @@ def test_sensor_readings_has_expected_columns():
         "received_at",
     }
 
-    assert expected_columns.issubset(column_names)
+    assert column_names == expected_columns
 
 
 def test_event_id_is_the_primary_key():

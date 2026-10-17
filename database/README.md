@@ -20,7 +20,8 @@ docker compose down -v && docker compose up -d
 
 ## Tables
 - users, soil_types, crops, fields, field_crops, sensors (relational)
-- sensor_readings, weather_data (TimescaleDB hypertables)
+- sensor_readings (REST ingestion events)
+- weather_data (TimescaleDB hypertable)
 
 ## Test data
 Sensor `SENSOR_001` belongs to Test Field 1 (field_id = 1).

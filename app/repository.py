@@ -15,7 +15,6 @@ def save_sensor_reading(event: dict) -> dict:
 
     readings = event["readings"]
 
-    
     sensor_reading = SensorReading(
         event_id=event["event_id"],
         device_id=event["device_id"],
