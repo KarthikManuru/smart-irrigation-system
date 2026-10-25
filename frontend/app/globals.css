@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gf-950: #04180f;
+  --color-gf-900: #08261a;
+  --color-gf-800: #0d3a27;
+  --color-gf-700: #14573a;
+  --color-gf-500: #22a05a;
+  --color-gf-400: #3fcf7a;
+  --color-gf-300: #7ee8a6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #04180f;
+  color: #ffffff;
+  font-family: var(--font-poppins), var(--font-deva), var(--font-kan),
+    var(--font-tam), var(--font-tel), var(--font-mal), var(--font-ben),
+    var(--font-guj), var(--font-pan), var(--font-ori), sans-serif;
+}
